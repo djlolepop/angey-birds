@@ -4,9 +4,10 @@ const Bodies = Matter.Bodies;
 const Constraint = Matter.Constraint;
 
 var engine, world;
-var box1, pig1;
+var box1, pig1,pig3;
 var backgroundImg,platform;
-var bird, slingShot;
+var bird, slingshot;
+var gamestat = "onsling"
 
 function preload() {
     backgroundImg = loadImage("sprites/bg.png");
@@ -45,7 +46,7 @@ function setup(){
 function draw(){
     background(backgroundImg);
     Engine.update(engine);
-    strokeWeight(4);
+    //strokeWeight(4);
     box1.display();
     box2.display();
     ground.display();
@@ -66,17 +67,20 @@ function draw(){
     //log6.display();
     slingshot.display();    
 }
-function keyPressed(){
-if (keyCode=== 32) {
-slingshot.attach(bird.body)
-}
-}
 
 function mouseDragged(){
+    if (gamestat != "launched"){
     Matter.Body.setPosition(bird.body, {x: mouseX , y: mouseY});
-}
+}}
 
 
 function mouseReleased(){
     slingshot.fly();
+    gamestat = "launched";
+}
+
+function keyPressed(){
+    if(keyCode === 32){
+        slingshot.attach(bird.body);
+    }
 }
